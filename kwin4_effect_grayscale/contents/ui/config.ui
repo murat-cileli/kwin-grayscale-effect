@@ -19,7 +19,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QCheckBox" name="checkBox">
+     <property name="text">
+      <string>Exclude / skip panels</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+       <widget class="QLabel" name="kcfg_ExcludePanels">
      <property name="text">
       <string>Effect Strength (%)</string>
      </property>
@@ -29,7 +36,7 @@
     </widget>
    </item>
    <item>
-       <widget class="QSpinBox" name="kcfg_EffectStrength">
+    <widget class="QSpinBox" name="kcfg_EffectStrength">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
        <horstretch>0</horstretch>
