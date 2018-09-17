@@ -1,6 +1,8 @@
 # KWin Grayscale Effect
 
-Grayscale effect for KWin window manager and KDE desktop environment.
+Configurable grayscale effect for KWin window manager and KDE desktop environment.
+
+![grayscale](https://gitlab.com/murat.cileli/kwin-grayscale-effect/raw/master/screenshot_20180917_191805.png "grayscale")
 
 ![grayscale](https://gitlab.com/murat.cileli/kwin-grayscale-effect/raw/master/Screenshot_20180917_090716.png "grayscale")
 
@@ -11,14 +13,7 @@ Grayscale effect for KWin window manager and KDE desktop environment.
 3. Copy "kwin4_effect_grayscale.desktop" to "/usr/share/kservices5/kwin"
 4. Add "kwin4_effect_grayscaleEnabled=true" to "[Plugins]" section in "~/.config/kwinrc"
 
-# Configuration
 
-Configuration file placed in "/usr/share/kwin/effects/kwin4_effect_grayscale/contents/config/main.xml". 
+### Known Quirks
 
-### Config Parameters
-
-**ApplyInactiveWindowsOnly** (boolean) : Effect applies inactive windows only if it's set true.
-
-**ExcludePanels** (boolean) : Effect does not applies panels if it's set true.
-
-**EffectStrength** (integer): Effect strength by percentage (%). 
+- **Settings doesn't apply**: In System Settings, uncheck "Grayscale" and re-check then apply.
