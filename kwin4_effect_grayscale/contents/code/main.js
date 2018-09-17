@@ -20,16 +20,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /*global effect, effects, animate, cancel, set, animationTime, Effect, QEasingCurve */
 /*jslint continue: true */
 var grayscaleEffect = {
-    duration: animationTime(1),
     startAnimation: function (window, duration) {
         "use strict";
-        if (window.visible === false) {
-            return;
-        }
-
-        window.dialogParentAnimation = set({
+        window.animation = set({
             window: window,
-            duration: duration,
+            duration: animationTime(100),
             animations: [{
                 type: Effect.Saturation,
                 to: 0
@@ -38,9 +33,9 @@ var grayscaleEffect = {
     },
     cancelAnimation: function (window) {
         "use strict";
-        if (window.dialogParentAnimation !== undefined) {
-            cancel(window.dialogParentAnimation);
-            window.dialogParentAnimation = undefined;
+        if (window.animation !== undefined) {
+            cancel(window.animation);
+            window.animation = undefined;
         }
     },
     windowClosed: function (window) {
@@ -50,31 +45,35 @@ var grayscaleEffect = {
     desktopChanged: function () {
         "use strict";
         var i, windows, window;
+        
         windows = effects.stackingOrder;
+        
         for (i = 0; i < windows.length; i += 1) {
-            window = windows[i];
-            grayscaleEffect.cancelAnimation(window);
-            grayscaleEffect.restartAnimation(window);
+            if (windows[i].visible === false) {
+                continue;
+            }
+            grayscaleEffect.cancelAnimation(windows[i]);
+            grayscaleEffect.startAnimation(windows[i]);
         }
-    },
-    restartAnimation: function (window) {
-        "use strict";
-        grayscaleEffect.startAnimation(window, 1);
     },
     init: function () {
         "use strict";
         var i, windows;
+
         effects.windowClosed.connect(grayscaleEffect.windowClosed);
         effects.windowMinimized.connect(grayscaleEffect.cancelAnimation);
-        effects.windowUnminimized.connect(grayscaleEffect.restartAnimation);
+        effects.windowUnminimized.connect(grayscaleEffect.startAnimation);
         effects['desktopChanged(int,int)'].connect(grayscaleEffect.desktopChanged);
         effects.desktopPresenceChanged.connect(grayscaleEffect.cancelAnimation);
-        effects.desktopPresenceChanged.connect(grayscaleEffect.restartAnimation);
+        effects.desktopPresenceChanged.connect(grayscaleEffect.startAnimation);
 
-        // start animation
         windows = effects.stackingOrder;
+
         for (i = 0; i < windows.length; i += 1) {
-            grayscaleEffect.restartAnimation(windows[i]);
+            if (windows[i].visible === false) {
+                continue;
+            }
+            grayscaleEffect.startAnimation(windows[i]);
         }
     }
 };
