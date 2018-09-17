@@ -6,9 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>200</width>
-    <height>100</height>
+    <width>241</width>
+    <height>122</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Grayscale Effect Options</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -19,14 +28,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBox">
+    <widget class="QCheckBox" name="kcfg_ExcludePanels">
      <property name="text">
       <string>Exclude / skip panels</string>
      </property>
     </widget>
    </item>
    <item>
-       <widget class="QLabel" name="kcfg_ExcludePanels">
+    <widget class="QLabel">
      <property name="text">
       <string>Effect Strength (%)</string>
      </property>
