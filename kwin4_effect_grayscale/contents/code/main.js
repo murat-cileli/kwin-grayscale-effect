@@ -20,16 +20,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /*global effect, effects, animate, cancel, set, animationTime, Effect, QEasingCurve */
 /*jslint continue: true */
 var grayscaleEffect = {
-    config: {
-        isApplyInactiveWindowsOnly: false,
-        isExcludePanels: false,
-        effectStrength: 100
-    },
     loadConfig: function() {
         "use strict";
-        grayscaleEffect.config.isApplyInactiveWindowsOnly = effect.readConfig("ApplyInactiveWindowsOnly", false);
-        grayscaleEffect.config.isExcludePanels = effect.readConfig("ExcludePanels", false);
-        grayscaleEffect.config.effectStrength = effect.readConfig("EffectStrength", 100);
+        grayscaleEffect.isApplyInactiveWindowsOnly = effect.readConfig("ApplyInactiveWindowsOnly", false);
+        grayscaleEffect.isExcludePanels = effect.readConfig("ExcludePanels", false);
+        grayscaleEffect.effectStrength = effect.readConfig("EffectStrength", 100);
     },
     startAnimation: function (window, duration) {
         "use strict";
@@ -40,12 +35,12 @@ var grayscaleEffect = {
         }
 
         // Do not apply active window by config
-        if (grayscaleEffect.config.isApplyInactiveWindowsOnly && window == effects.activeWindow) {
+        if (grayscaleEffect.isApplyInactiveWindowsOnly === true && window == effects.activeWindow) {
             return false;
         }
 
         // Do not apply panels by config
-        if (grayscaleEffect.config.isExcludePanels && window.windowClass.indexOf('plasmashell') != -1) {
+        if (grayscaleEffect.isExcludePanels === true && window.windowClass.indexOf('plasmashell') !== -1) {
             return false;
         }
 
@@ -54,7 +49,7 @@ var grayscaleEffect = {
             duration: animationTime(100),
             animations: [{
                 type: Effect.Saturation,
-                to: 1.0 - parseFloat(grayscaleEffect.config.effectStrength / 100)
+                to: 1.0 - parseFloat(grayscaleEffect.effectStrength / 100)
             }]
         });
     },
