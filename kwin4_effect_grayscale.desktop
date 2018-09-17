@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=Grayscale
+Icon=preferences-system-windows-effect-dialog-parent
+Comment=Fullscreem grayscale effect.
+
+Type=Service
+X-Plasma-API=javascript
+X-Plasma-MainScript=code/main.js
+X-KDE-ServiceTypes=KWin/Effect
+X-KDE-PluginInfo-Name=kwin4_effect_grayscale
+X-KDE-PluginInfo-Author=Phan Quang Đạt
+X-KDE-PluginInfo-Email=ineedyou.lonely@gmail.com
+X-KDE-PluginInfo-Version=0.0.1
+X-KDE-PluginInfo-Category=Appearance
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+X-KDE-Ordering=10
