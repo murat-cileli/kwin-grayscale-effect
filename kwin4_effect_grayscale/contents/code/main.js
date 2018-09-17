@@ -48,7 +48,7 @@ var grayscaleEffect = {
         
         windows = effects.stackingOrder;
         
-        for (i = 0; i < windows.length; i += 1) {
+        for (i = 0; i < windows.length; i++) {
             if (windows[i].visible === false) {
                 continue;
             }
@@ -69,7 +69,7 @@ var grayscaleEffect = {
 
         windows = effects.stackingOrder;
 
-        for (i = 0; i < windows.length; i += 1) {
+        for (i = 0; i < windows.length; i++) {
             if (windows[i].visible === false) {
                 continue;
             }
