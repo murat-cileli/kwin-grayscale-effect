@@ -20,14 +20,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /*global effect, effects, animate, cancel, set, animationTime, Effect, QEasingCurve */
 /*jslint continue: true */
 var grayscaleEffect = {
+    config: {
+        isApplyInactiveWindowsOnly: false,
+        isExcludePanels: false,
+        effectStrength: 100
+    },
+    loadConfig: function() {
+        "use strict";
+        grayscaleEffect.config.isApplyInactiveWindowsOnly = effect.readConfig("ApplyInactiveWindowsOnly", false);
+        grayscaleEffect.config.isExcludePanels = effect.readConfig("ExcludePanels", false);
+        grayscaleEffect.config.effectStrength = effect.readConfig("EffectStrength", 100);
+    },
     startAnimation: function (window, duration) {
         "use strict";
+
+        // Do not apply invisible windows
+        if (window.visible === false) {
+            return false;
+        }
+
+        // Do not apply active window by config
+        if (grayscaleEffect.config.isApplyInactiveWindowsOnly && window == effects.activeWindow) {
+            return false;
+        }
+
+        // Do not apply panels by config
+        if (grayscaleEffect.config.isExcludePanels && window.windowClass.indexOf('plasmashell') != -1) {
+            return false;
+        }
+
         window.animation = set({
             window: window,
             duration: animationTime(100),
             animations: [{
                 type: Effect.Saturation,
-                to: 0
+                to: 1.0 - parseFloat(grayscaleEffect.config.effectStrength / 100)
             }]
         });
     },
@@ -38,10 +65,6 @@ var grayscaleEffect = {
             window.animation = undefined;
         }
     },
-    windowClosed: function (window) {
-        "use strict";
-        grayscaleEffect.cancelAnimation(window);
-    },
     desktopChanged: function () {
         "use strict";
         var i, windows, window;
@@ -49,9 +72,6 @@ var grayscaleEffect = {
         windows = effects.stackingOrder;
         
         for (i = 0; i < windows.length; i++) {
-            if (windows[i].visible === false) {
-                continue;
-            }
             grayscaleEffect.cancelAnimation(windows[i]);
             grayscaleEffect.startAnimation(windows[i]);
         }
@@ -60,19 +80,18 @@ var grayscaleEffect = {
         "use strict";
         var i, windows;
 
-        effects.windowClosed.connect(grayscaleEffect.windowClosed);
+        effects.windowClosed.connect(grayscaleEffect.cancelAnimation);
         effects.windowMinimized.connect(grayscaleEffect.cancelAnimation);
         effects.windowUnminimized.connect(grayscaleEffect.startAnimation);
         effects['desktopChanged(int,int)'].connect(grayscaleEffect.desktopChanged);
         effects.desktopPresenceChanged.connect(grayscaleEffect.cancelAnimation);
         effects.desktopPresenceChanged.connect(grayscaleEffect.startAnimation);
 
+        grayscaleEffect.loadConfig();
+
         windows = effects.stackingOrder;
 
         for (i = 0; i < windows.length; i++) {
-            if (windows[i].visible === false) {
-                continue;
-            }
             grayscaleEffect.startAnimation(windows[i]);
         }
     }
