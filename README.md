@@ -2,9 +2,9 @@
 
 Configurable grayscale effect for KWin window manager and KDE desktop environment.
 
-![grayscale](https://gitlab.com/murat.cileli/kwin-grayscale-effect/raw/master/screenshot_20180917_191805.png "grayscale")
+![screenshot_20180917_191805](https://user-images.githubusercontent.com/6532000/50812558-3a565e80-1324-11e9-9006-19422928b3fb.png)
 
-![grayscale](https://gitlab.com/murat.cileli/kwin-grayscale-effect/raw/master/Screenshot_20180917_090716.png "grayscale")
+![screenshot_20180917_090716](https://user-images.githubusercontent.com/6532000/50812559-3cb8b880-1324-11e9-8b06-0bd04ae763bd.png)
 
 # Installation
 
