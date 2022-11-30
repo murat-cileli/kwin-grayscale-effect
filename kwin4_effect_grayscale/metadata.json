@@ -1,0 +1,30 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "murat.cileli@gmail.com",
+                "Name": "Murat Çileli"
+            }
+        ],
+        "Category": "Appearance",
+        "Description": "Full screen grayscale effect.",
+        "EnabledByDefault": true,
+        "Icon": "preferences-system-windows-effect-dialog-parent",
+        "Id": "kwin4_effect_grayscale",
+        "License": "GPL",
+        "Name": "Grayscale",
+        "ServiceTypes": [
+            "KWin/Effect",
+            "KCModule"
+        ],
+        "Version": "0.2.0"
+    },
+    "X-KDE-Ordering": 50,
+    "X-KDE-ParentComponents": [
+        "kwin_effect_grayscale"
+    ],
+    "X-KDE-PluginKeyword": "kwin4_effect_grayscale",
+    "X-KWin-Config-TranslationDomain": "kwin_effects",
+    "X-Plasma-API": "javascript",
+    "X-Plasma-MainScript": "code/main.js"
+}
