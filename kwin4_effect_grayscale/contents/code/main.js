@@ -87,6 +87,7 @@ const grayscaleEffect = {
     effects['desktopChanged(int,int)'].connect(grayscaleEffect.desktopChanged);
     effects.desktopPresenceChanged.connect(grayscaleEffect.restartAnimation);
     effects.windowClosed.connect(grayscaleEffect.cancelAnimation);
+    effects.windowMinimized.connect(grayscaleEffect.cancelAnimation);
 
     grayscaleEffect.loadConfig();
 
