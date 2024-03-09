@@ -17,11 +17,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************** */
-/* global effect, effects, animate, cancel, set, animationTime, Effect, QEasingCurve */
+/* global effect, effects, animate, cancel, set, animationTime, Effect */
 
 'use strict';
 
 const grayscaleEffect = {
+  init() {
+    grayscaleEffect.loadConfig();
+
+    effects.windowActivated.connect(grayscaleEffect.windowActivated);
+    effects.desktopChanged.connect(grayscaleEffect.desktopChanged);
+    effects.windowClosed.connect(grayscaleEffect.cancelAnimation);
+
+    effects.stackingOrder.forEach(grayscaleEffect.restartAnimationIfNone);
+  },
   loadConfig() {
     grayscaleEffect.isApplyInactiveWindowsOnly = effect.readConfig(
       'ApplyInactiveWindowsOnly',
@@ -52,7 +61,7 @@ const grayscaleEffect = {
 
     window.animation = set({
       window,
-      duration: animationTime(100),
+      duration: animationTime(250),
       animations: [
         {
           type: Effect.Saturation,
@@ -71,25 +80,17 @@ const grayscaleEffect = {
     grayscaleEffect.cancelAnimation(window);
     grayscaleEffect.startAnimation(window);
   },
+  restartAnimationIfNone(window) {
+    if (!window.animation) {
+      grayscaleEffect.restartAnimation(window);
+    }
+  },
   windowActivated(activatedWindow) {
-    if (!activatedWindow) return;
-    if (grayscaleEffect.isApplyInactiveWindowsOnly)
+    if (grayscaleEffect.isApplyInactiveWindowsOnly && activatedWindow)
       grayscaleEffect.cancelAnimation(activatedWindow);
-    effects.stackingOrder
-      .filter((element) => !element.animation)
-      .forEach(grayscaleEffect.startAnimation);
+    effects.stackingOrder.forEach(grayscaleEffect.restartAnimationIfNone);
   },
   desktopChanged() {
-    effects.stackingOrder.forEach(grayscaleEffect.restartAnimation);
-  },
-  init() {
-    effects.windowActivated.connect(grayscaleEffect.windowActivated);
-    effects['desktopChanged(int,int)'].connect(grayscaleEffect.desktopChanged);
-    effects.desktopPresenceChanged.connect(grayscaleEffect.restartAnimation);
-    effects.windowClosed.connect(grayscaleEffect.cancelAnimation);
-
-    grayscaleEffect.loadConfig();
-
     effects.stackingOrder.forEach(grayscaleEffect.restartAnimation);
   },
 };
